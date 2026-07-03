@@ -93,6 +93,39 @@
     <a href="#" class="next">Next →</a>
 
   </div>
+<script>
+  let score = 0;
 
+  const options = document.querySelectorAll('input[name="q1"]');
+  const nextBtn = document.querySelector('.next');
+
+  options.forEach((option, index) => {
+    option.addEventListener('change', () => {
+      // Reset score each time
+      score = 0;
+
+      // Assign scoring (5 → 1 like your system)
+      if (index === 0) score = 5;
+      if (index === 1) score = 4;
+      if (index === 2) score = 2;
+      if (index === 3) score = 1;
+    });
+  });
+
+  nextBtn.addEventListener('click', (e) => {
+    e.preventDefault();
+
+    if (score === 0) {
+      alert("Please select an option first.");
+      return;
+    }
+
+    // Save score temporarily
+    localStorage.setItem("compassScore", score);
+
+    // Move to next step (we’ll build this next)
+    window.location.href = "result.html";
+  });
+</script>
 </body>
 </html>
