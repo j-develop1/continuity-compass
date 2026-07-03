@@ -82,35 +82,100 @@
 
 <script>
 const questions = [
-  {
-    text: "How many income streams does your business have?",
-    category: "dependence",
-    options: [
-      { text: "1 main source", score: 5 },
-      { text: "2 sources", score: 4 },
-      { text: "3 sources", score: 2 },
-      { text: "4+ diversified", score: 1 }
-    ]
-  },
-  {
-    text: "How reliant are you on one platform?",
-    category: "digital",
-    options: [
-      { text: "Completely reliant", score: 5 },
-      { text: "Mostly reliant", score: 4 },
-      { text: "Balanced", score: 2 },
-      { text: "Platform-independent", score: 1 }
-    ]
-  },
-  {
-    text: "Do you regularly back up business data?",
-    category: "data",
-    options: [
-      { text: "Never", score: 5 },
-      { text: "Occasionally", score: 3 },
-      { text: "Automated backups", score: 1 }
-    ]
-  }
+  // BUSINESS DEPENDENCE
+  { text: "How many income streams does your business have?", category: "dependence", options: [
+    { text: "1 main source", score: 5 },
+    { text: "2 sources", score: 4 },
+    { text: "3 sources", score: 2 },
+    { text: "4+ diversified", score: 1 }
+  ]},
+
+  { text: "What % of revenue comes from your largest customer/platform?", category: "dependence", options: [
+    { text: "80–100%", score: 5 },
+    { text: "50–79%", score: 4 },
+    { text: "30–49%", score: 3 },
+    { text: "<30%", score: 1 }
+  ]},
+
+  // DIGITAL RISK
+  { text: "How reliant are you on one platform (Instagram, TikTok, Shopify)?", category: "digital", options: [
+    { text: "Completely reliant", score: 5 },
+    { text: "Mostly reliant", score: 4 },
+    { text: "Balanced", score: 2 },
+    { text: "Platform-independent", score: 1 }
+  ]},
+
+  { text: "Have you ever been locked out or restricted from a key account?", category: "digital", options: [
+    { text: "Yes, major impact", score: 5 },
+    { text: "Yes, minor impact", score: 3 },
+    { text: "No", score: 1 }
+  ]},
+
+  // DATA & ASSETS
+  { text: "Do you regularly back up key business data?", category: "data", options: [
+    { text: "Never", score: 5 },
+    { text: "Occasionally", score: 3 },
+    { text: "Automated backups", score: 1 }
+  ]},
+
+  { text: "If your device was lost today, could you recover everything?", category: "data", options: [
+    { text: "No", score: 5 },
+    { text: "Somewhat", score: 3 },
+    { text: "Yes fully", score: 1 }
+  ]},
+
+  // OPERATIONS
+  { text: "Can anyone else run your business if you are unavailable?", category: "operations", options: [
+    { text: "No", score: 5 },
+    { text: "Partially", score: 3 },
+    { text: "Yes", score: 1 }
+  ]},
+
+  { text: "Do you have documented processes for key tasks?", category: "operations", options: [
+    { text: "None", score: 5 },
+    { text: "Some notes", score: 3 },
+    { text: "Fully documented", score: 1 }
+  ]},
+
+  // FINANCIAL
+  { text: "How many months could you operate with no income?", category: "financial", options: [
+    { text: "<1 month", score: 5 },
+    { text: "1–2 months", score: 4 },
+    { text: "3–6 months", score: 3 },
+    { text: "6+ months", score: 1 }
+  ]},
+
+  { text: "Do you have emergency business funds?", category: "financial", options: [
+    { text: "No", score: 5 },
+    { text: "Some savings", score: 3 },
+    { text: "Dedicated reserve", score: 1 }
+  ]},
+
+  // RECOVERY
+  { text: "Do you have a recovery plan if systems fail?", category: "recovery", options: [
+    { text: "No", score: 5 },
+    { text: "Informal idea", score: 3 },
+    { text: "Written plan", score: 1 }
+  ]},
+
+  { text: "Could you restart operations within 48 hours?", category: "recovery", options: [
+    { text: "No", score: 5 },
+    { text: "Partially", score: 3 },
+    { text: "Yes", score: 1 }
+  ]},
+
+  // COMMUNICATION
+  { text: "If your main social account was lost, could you reach your audience?", category: "comms", options: [
+    { text: "No", score: 5 },
+    { text: "Partially", score: 3 },
+    { text: "Yes (email/SMS list)", score: 1 }
+  ]},
+
+  { text: "Do you have crisis communication templates ready?", category: "comms", options: [
+    { text: "No", score: 5 },
+    { text: "Some drafts", score: 3 },
+    { text: "Fully prepared", score: 1 }
+  ]}
 ];
 
 let current = 0;
@@ -122,11 +187,10 @@ let scores = {
   operations: 0,
   financial: 0,
   recovery: 0,
-  communication: 0
+  comms: 0
 };
 
-let selectedScore = null;
-let selectedCategory = null;
+let selected = false;
 
 function loadQuestion() {
   const q = questions[current];
@@ -134,10 +198,10 @@ function loadQuestion() {
   document.getElementById("question").innerText = q.text;
   document.getElementById("progress").innerText = `Question ${current + 1} of ${questions.length}`;
 
-  selectedCategory = q.category;
-
   const optionsDiv = document.getElementById("options");
   optionsDiv.innerHTML = "";
+
+  selected = false;
 
   q.options.forEach(opt => {
     const div = document.createElement("div");
@@ -145,7 +209,7 @@ function loadQuestion() {
     div.innerText = opt.text;
 
     div.onclick = () => {
-      selectedScore = opt.score;
+      selected = true;
       scores[q.category] += opt.score;
     };
 
@@ -156,12 +220,10 @@ function loadQuestion() {
 document.getElementById("nextBtn").onclick = (e) => {
   e.preventDefault();
 
-  if (selectedScore === null) {
+  if (!selected) {
     alert("Please select an option");
     return;
   }
-
-  selectedScore = null;
 
   current++;
 
