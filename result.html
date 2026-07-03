@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Your Compass Score™</title>
+  <title>Your Compass Report™</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
@@ -16,33 +16,86 @@
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
+      padding: 20px;
     }
 
     .card {
       background: white;
       padding: 40px;
       border-radius: 24px;
-      text-align: center;
-      max-width: 500px;
-      width: 90%;
+      max-width: 750px;
+      width: 100%;
+      box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    }
+
+    h1 {
+      font-size: 26px;
+      margin-bottom: 10px;
     }
 
     .score {
-      font-size: 72px;
+      font-size: 64px;
       font-weight: 600;
       color: #0A84FF;
       margin: 20px 0;
     }
 
-    p {
+    .label {
+      font-size: 18px;
+      margin-bottom: 20px;
+      font-weight: 500;
+    }
+
+    .grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 16px;
+      margin-top: 30px;
+    }
+
+    .box {
+      background: #F5F5F7;
+      padding: 16px;
+      border-radius: 16px;
+    }
+
+    .box h3 {
+      margin: 0 0 6px 0;
+      font-size: 14px;
+      color: #6E6E73;
+      font-weight: 500;
+    }
+
+    .box p {
+      margin: 0;
+      font-size: 18px;
+      font-weight: 600;
+    }
+
+    .tag {
+      display: inline-block;
+      padding: 6px 12px;
+      border-radius: 999px;
+      font-size: 13px;
+      margin-top: 20px;
+    }
+
+    .green { background: #E7F8EE; color: #1A7F37; }
+    .yellow { background: #FFF6D6; color: #8A6D1E; }
+    .orange { background: #FFE8D6; color: #A34A00; }
+    .red { background: #FFE2E2; color: #B42318; }
+
+    ul {
+      margin-top: 20px;
+      padding-left: 18px;
       color: #6E6E73;
       line-height: 1.6;
     }
 
     .btn {
       display: inline-block;
-      margin-top: 20px;
+      margin-top: 25px;
       background: #0A84FF;
       color: white;
       padding: 12px 20px;
@@ -54,22 +107,132 @@
 
 <body>
 
-  <div class="card">
-    <h1>Your Compass Score™</h1>
+<div class="card">
 
-    <div class="score" id="score">0</div>
+  <h1>Your Continuity Compass™ Report</h1>
 
-    <p>
-      This is your initial resilience snapshot based on your answers.
-    </p>
+  <div class="score" id="score">0</div>
 
-    <a href="index.html" class="btn">Back to Home</a>
+  <div class="label" id="label">Calculating...</div>
+
+  <div class="tag" id="tag">-</div>
+
+  <div class="grid">
+    <div class="box">
+      <h3>Dependence</h3>
+      <p id="dep">0</p>
+    </div>
+
+    <div class="box">
+      <h3>Digital Risk</h3>
+      <p id="dig">0</p>
+    </div>
+
+    <div class="box">
+      <h3>Data Protection</h3>
+      <p id="data">0</p>
+    </div>
+
+    <div class="box">
+      <h3>Financial</h3>
+      <p id="fin">0</p>
+    </div>
   </div>
 
-  <script>
-    const score = localStorage.getItem("compassScore") || 0;
-    document.getElementById("score").innerText = score * 20;
-  </script>
+  <h3 style="margin-top:30px;">Next Steps</h3>
+  <ul id="advice"></ul>
+
+  <a href="index.html" class="btn">Retake Assessment</a>
+
+</div>
+
+<script>
+const scores = JSON.parse(localStorage.getItem("compassScores")) || {
+  dependence: 0,
+  digital: 0,
+  data: 0,
+  operations: 0,
+  financial: 0,
+  recovery: 0,
+  communication: 0
+};
+
+const total =
+  scores.dependence +
+  scores.digital +
+  scores.data +
+  scores.operations +
+  scores.financial +
+  scores.recovery +
+  scores.communication;
+
+document.getElementById("score").innerText = total;
+
+// category display
+document.getElementById("dep").innerText = scores.dependence;
+document.getElementById("dig").innerText = scores.digital;
+document.getElementById("data").innerText = scores.data;
+document.getElementById("fin").innerText = scores.financial;
+
+// classification
+let label = "";
+let tag = "";
+let advice = [];
+
+if (total <= 15) {
+  label = "Resilient Profile";
+  tag = "green";
+  advice = [
+    "Maintain redundancy across systems",
+    "Run quarterly stress tests",
+    "Document critical processes"
+  ];
+}
+
+else if (total <= 25) {
+  label = "Stable but Exposed";
+  tag = "yellow";
+  advice = [
+    "Reduce dependency on single platforms",
+    "Build a backup communication channel",
+    "Start formal data backup routines"
+  ];
+}
+
+else if (total <= 35) {
+  label = "Vulnerable Profile";
+  tag = "orange";
+  advice = [
+    "Diversify income sources immediately",
+    "Create emergency recovery plan",
+    "Secure access and authentication systems"
+  ];
+}
+
+else {
+  label = "Critical Fragility";
+  tag = "red";
+  advice = [
+    "Stop scaling until systems are stabilised",
+    "Build backup revenue channel immediately",
+    "Implement full continuity plan within 14 days"
+  ];
+}
+
+document.getElementById("label").innerText = label;
+
+const tagEl = document.getElementById("tag");
+tagEl.innerText = label;
+tagEl.classList.add(tag);
+
+// advice list
+const ul = document.getElementById("advice");
+advice.forEach(a => {
+  const li = document.createElement("li");
+  li.innerText = a;
+  ul.appendChild(li);
+});
+</script>
 
 </body>
 </html>
