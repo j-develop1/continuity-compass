@@ -3,9 +3,9 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Your Compass Report™</title>
+<title>Your Report - Continuity Compass™</title>
 
-<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;500;600&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
 <style>
   body {
@@ -14,22 +14,21 @@
     background: #F8F8F6;
     display: flex;
     justify-content: center;
-    align-items: center;
-    min-height: 100vh;
+    padding: 40px 20px;
   }
 
   .card {
     background: white;
     padding: 40px;
     border-radius: 24px;
-    width: 90%;
-    max-width: 700px;
+    max-width: 800px;
+    width: 100%;
   }
 
   .score {
     font-size: 64px;
-    color: #0A84FF;
     font-weight: 600;
+    color: #0A84FF;
   }
 
   .tag {
@@ -39,24 +38,24 @@
     margin-top: 10px;
   }
 
-  .green { background: #E7F8EE; color: #1A7F37; }
-  .yellow { background: #FFF6D6; color: #8A6D1E; }
-  .orange { background: #FFE8D6; color: #A34A00; }
-  .red { background: #FFE2E2; color: #B42318; }
+  .green { background:#E7F8EE; color:#1A7F37; }
+  .yellow { background:#FFF6D6; color:#8A6D1E; }
+  .orange { background:#FFE8D6; color:#A34A00; }
+  .red { background:#FFE2E2; color:#B42318; }
 
-  ul {
-    margin-top: 20px;
-    line-height: 1.6;
+  h3 {
+    margin-top: 30px;
   }
 
-  .btn {
-    display: inline-block;
-    margin-top: 20px;
-    background: #0A84FF;
-    color: white;
-    padding: 12px 18px;
-    border-radius: 14px;
-    text-decoration: none;
+  ul {
+    line-height: 1.6;
+    color: #444;
+  }
+
+  .section {
+    margin-top: 30px;
+    padding-top: 20px;
+    border-top: 1px solid #E5E5EA;
   }
 </style>
 </head>
@@ -65,18 +64,25 @@
 
 <div class="card">
 
-<h1>Your Compass Score™</h1>
-<div class="score" id="score">0</div>
+  <h1>Your Continuity Compass Report™</h1>
 
-<div class="tag" id="tag">-</div>
+  <div class="score" id="score">0</div>
+  <div class="tag" id="tag">-</div>
 
-<ul id="advice"></ul>
+  <div class="section">
+    <h3>Key Recommendations</h3>
+    <ul id="advice"></ul>
+  </div>
 
-<a href="index.html" class="btn">Retake Assessment</a>
+  <div class="section">
+    <h3>Recommended Documents</h3>
+    <ul id="docs"></ul>
+  </div>
 
 </div>
 
 <script>
+
 const scores = JSON.parse(localStorage.getItem("compassScores")) || {};
 
 const total = Object.values(scores).reduce((a,b)=>a+(b||0),0);
@@ -86,35 +92,85 @@ document.getElementById("score").innerText = total;
 let label = "";
 let tagClass = "";
 let advice = [];
+let docs = [];
 
 if (total <= 15) {
   label = "Resilient";
   tagClass = "green";
-  advice = ["Maintain systems", "Quarterly stress tests", "Document processes"];
-} else if (total <= 25) {
-  label = "Stable";
-  tagClass = "yellow";
-  advice = ["Reduce dependencies", "Improve backups", "Build email list"];
-} else if (total <= 35) {
-  label = "Vulnerable";
-  tagClass = "orange";
-  advice = ["Diversify income", "Create recovery plan", "Secure access"];
-} else {
-  label = "Critical";
-  tagClass = "red";
-  advice = ["Stabilise systems first", "Build backup channel", "Reduce risk fast"];
+  advice = [
+    "Maintain current systems",
+    "Run quarterly stress tests",
+    "Keep documentation updated"
+  ];
+  docs = [
+    "Operational Efficiency Playbook",
+    "Advanced Risk Monitoring Guide",
+    "Scaling Safely Framework"
+  ];
 }
 
-const tag = document.getElementById("tag");
-tag.innerText = label;
-tag.classList.add(tagClass);
+else if (total <= 25) {
+  label = "Stable";
+  tagClass = "yellow";
+  advice = [
+    "Reduce dependency on single platforms",
+    "Build backup communication channels",
+    "Improve data backup routines"
+  ];
+  docs = [
+    "Business Stability Handbook",
+    "Backup Systems Setup Guide",
+    "Dependency Reduction Framework"
+  ];
+}
 
-const ul = document.getElementById("advice");
+else if (total <= 35) {
+  label = "Vulnerable";
+  tagClass = "orange";
+  advice = [
+    "Diversify income streams immediately",
+    "Create recovery plan",
+    "Secure all access systems"
+  ];
+  docs = [
+    "Business Recovery Toolkit",
+    "Revenue Diversification Guide",
+    "Crisis Response Playbook"
+  ];
+}
+
+else {
+  label = "Critical";
+  tagClass = "red";
+  advice = [
+    "Stop scaling until stable",
+    "Build backup income channel",
+    "Implement continuity plan immediately"
+  ];
+  docs = [
+    "Emergency Business Survival Plan",
+    "48-Hour Recovery Guide",
+    "Critical Systems Restart Manual"
+  ];
+}
+
+document.getElementById("tag").innerText = label;
+document.getElementById("tag").classList.add(tagClass);
+
+const adviceList = document.getElementById("advice");
 advice.forEach(a => {
   const li = document.createElement("li");
   li.innerText = a;
-  ul.appendChild(li);
+  adviceList.appendChild(li);
 });
+
+const docList = document.getElementById("docs");
+docs.forEach(d => {
+  const li = document.createElement("li");
+  li.innerText = d;
+  docList.appendChild(li);
+});
+
 </script>
 
 </body>
