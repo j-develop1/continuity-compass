@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-  <title>Continuity Compass™ - Assessment</title>
+  <title>Continuity Compass™ Assessment</title>
 
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
@@ -12,30 +12,31 @@
       margin: 0;
       font-family: 'Inter', sans-serif;
       background: #F8F8F6;
-      color: #1D1D1F;
       display: flex;
       justify-content: center;
       align-items: center;
-      height: 100vh;
+      min-height: 100vh;
+      color: #1D1D1F;
     }
 
     .card {
       background: white;
       padding: 40px;
       border-radius: 24px;
-      max-width: 600px;
       width: 90%;
+      max-width: 650px;
       box-shadow: 0 10px 30px rgba(0,0,0,0.05);
     }
 
     h1 {
-      font-size: 28px;
+      font-size: 22px;
       margin-bottom: 10px;
     }
 
-    p {
+    .progress {
+      font-size: 14px;
       color: #6E6E73;
-      margin-bottom: 30px;
+      margin-bottom: 20px;
     }
 
     .option {
@@ -61,71 +62,119 @@
       padding: 12px 20px;
       border-radius: 14px;
       text-decoration: none;
-      font-size: 14px;
     }
   </style>
 </head>
 
 <body>
 
-  <div class="card">
+<div class="card">
 
-    <h1>How dependent is your business on a single platform?</h1>
+  <div class="progress" id="progress">Question 1 of 1</div>
 
-    <p>Be honest — this helps us calculate your resilience score.</p>
+  <h1 id="question">Loading...</h1>
 
-    <label class="option">
-      <input type="radio" name="q1"> Completely dependent (Instagram / one channel)
-    </label>
+  <div id="options"></div>
 
-    <label class="option">
-      <input type="radio" name="q1"> Mostly dependent on one main channel
-    </label>
+  <a href="#" class="next" id="nextBtn">Next →</a>
 
-    <label class="option">
-      <input type="radio" name="q1"> Balanced across multiple channels
-    </label>
+</div>
 
-    <label class="option">
-      <input type="radio" name="q1"> Fully diversified business
-    </label>
-
-    <a href="#" class="next">Next →</a>
-
-  </div>
 <script>
-  let score = 0;
+const questions = [
+  {
+    text: "How many income streams does your business have?",
+    category: "dependence",
+    options: [
+      { text: "1 main source", score: 5 },
+      { text: "2 sources", score: 4 },
+      { text: "3 sources", score: 2 },
+      { text: "4+ diversified", score: 1 }
+    ]
+  },
+  {
+    text: "How reliant are you on one platform?",
+    category: "digital",
+    options: [
+      { text: "Completely reliant", score: 5 },
+      { text: "Mostly reliant", score: 4 },
+      { text: "Balanced", score: 2 },
+      { text: "Platform-independent", score: 1 }
+    ]
+  },
+  {
+    text: "Do you regularly back up business data?",
+    category: "data",
+    options: [
+      { text: "Never", score: 5 },
+      { text: "Occasionally", score: 3 },
+      { text: "Automated backups", score: 1 }
+    ]
+  }
+];
 
-  const options = document.querySelectorAll('input[name="q1"]');
-  const nextBtn = document.querySelector('.next');
+let current = 0;
 
-  options.forEach((option, index) => {
-    option.addEventListener('change', () => {
-      // Reset score each time
-      score = 0;
+let scores = {
+  dependence: 0,
+  digital: 0,
+  data: 0,
+  operations: 0,
+  financial: 0,
+  recovery: 0,
+  communication: 0
+};
 
-      // Assign scoring (5 → 1 like your system)
-      if (index === 0) score = 5;
-      if (index === 1) score = 4;
-      if (index === 2) score = 2;
-      if (index === 3) score = 1;
-    });
+let selectedScore = null;
+let selectedCategory = null;
+
+function loadQuestion() {
+  const q = questions[current];
+
+  document.getElementById("question").innerText = q.text;
+  document.getElementById("progress").innerText = `Question ${current + 1} of ${questions.length}`;
+
+  selectedCategory = q.category;
+
+  const optionsDiv = document.getElementById("options");
+  optionsDiv.innerHTML = "";
+
+  q.options.forEach(opt => {
+    const div = document.createElement("div");
+    div.className = "option";
+    div.innerText = opt.text;
+
+    div.onclick = () => {
+      selectedScore = opt.score;
+      scores[q.category] += opt.score;
+    };
+
+    optionsDiv.appendChild(div);
   });
+}
 
-  nextBtn.addEventListener('click', (e) => {
-    e.preventDefault();
+document.getElementById("nextBtn").onclick = (e) => {
+  e.preventDefault();
 
-    if (score === 0) {
-      alert("Please select an option first.");
-      return;
-    }
+  if (selectedScore === null) {
+    alert("Please select an option");
+    return;
+  }
 
-    // Save score temporarily
-    localStorage.setItem("compassScore", score);
+  selectedScore = null;
 
-    // Move to next step (we’ll build this next)
+  current++;
+
+  if (current >= questions.length) {
+    localStorage.setItem("compassScores", JSON.stringify(scores));
     window.location.href = "result.html";
-  });
+  } else {
+    loadQuestion();
+  }
+};
+
+loadQuestion();
 </script>
+
 </body>
 </html>
