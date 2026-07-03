@@ -1,9 +1,9 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta name="viewport" content="width=device-width, initial-scale=1.0"/>
-<title>Continuity Compass™ Assessment</title>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Continuity Compass™</title>
 
 <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
 
@@ -12,229 +12,225 @@
     margin: 0;
     font-family: 'Inter', sans-serif;
     background: #F8F8F6;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    min-height: 100vh;
     color: #1D1D1F;
+  }
+
+  .wrap {
+    max-width: 1000px;
+    margin: 0 auto;
+    padding: 90px 20px;
+  }
+
+  /* HERO */
+  .hero h1 {
+    font-size: 48px;
+    letter-spacing: -1px;
+    margin-bottom: 12px;
+  }
+
+  .hero p {
+    font-size: 18px;
+    color: #6E6E73;
+    max-width: 700px;
+    line-height: 1.6;
+  }
+
+  .cta {
+    display: inline-block;
+    margin-top: 28px;
+    background: #0A84FF;
+    color: white;
+    padding: 14px 22px;
+    border-radius: 14px;
+    text-decoration: none;
+    font-weight: 500;
+  }
+
+  .secondary {
+    margin-top: 12px;
+    font-size: 13px;
+    color: #8E8E93;
+  }
+
+  /* GRID */
+  .grid {
+    margin-top: 60px;
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 16px;
   }
 
   .card {
     background: white;
-    padding: 40px;
-    border-radius: 24px;
-    width: 92%;
-    max-width: 680px;
-    box-shadow: 0 10px 30px rgba(0,0,0,0.05);
+    border: 1px solid #E5E5EA;
+    border-radius: 18px;
+    padding: 18px;
   }
 
-  .progress-container {
-    width: 100%;
-    height: 6px;
-    background: #E5E5EA;
-    border-radius: 999px;
-    overflow: hidden;
+  .card h3 {
+    margin: 0 0 8px 0;
+    font-size: 14px;
+  }
+
+  .card p {
+    margin: 0;
+    font-size: 13px;
+    color: #6E6E73;
+    line-height: 1.4;
+  }
+
+  /* SECTION */
+  .section {
+    margin-top: 70px;
+  }
+
+  .section h2 {
+    font-size: 26px;
     margin-bottom: 10px;
   }
 
-  .progress-bar {
-    height: 100%;
-    width: 0%;
-    background: #0A84FF;
-    transition: width 0.35s ease;
-  }
-
-  .progress {
-    font-size: 13px;
+  .section p {
     color: #6E6E73;
-    margin-bottom: 18px;
+    line-height: 1.6;
+    max-width: 800px;
   }
 
-  h1 {
-    font-size: 20px;
-    margin-bottom: 18px;
+  /* OUTCOME BLOCKS */
+  .outcomes {
+    margin-top: 25px;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 16px;
   }
 
-  .option {
-    padding: 14px;
-    border-radius: 14px;
+  .outcome {
+    background: white;
     border: 1px solid #E5E5EA;
-    margin-bottom: 12px;
-    cursor: pointer;
-    transition: 0.2s;
+    padding: 18px;
+    border-radius: 18px;
   }
 
-  .option:hover {
-    border-color: #0A84FF;
-    background: #F0F7FF;
+  .outcome strong {
+    display: block;
+    margin-bottom: 6px;
   }
 
-  .option.selected {
-    border-color: #0A84FF;
-    background: #F0F7FF;
-  }
-
-  .next {
-    display: inline-block;
-    margin-top: 18px;
-    padding: 12px 18px;
+  /* FOOTER CTA */
+  .final-cta {
+    margin-top: 80px;
     background: #0A84FF;
     color: white;
+    padding: 30px;
+    border-radius: 22px;
+    text-align: center;
+  }
+
+  .final-cta h2 {
+    margin: 0 0 10px 0;
+  }
+
+  .final-cta a {
+    display: inline-block;
+    margin-top: 12px;
+    background: white;
+    color: #0A84FF;
+    padding: 12px 18px;
     border-radius: 12px;
     text-decoration: none;
+    font-weight: 500;
+  }
+
+  /* MOBILE */
+  @media(max-width: 768px){
+    .hero h1 { font-size: 34px; }
+
+    .grid {
+      grid-template-columns: 1fr;
+    }
+
+    .outcomes {
+      grid-template-columns: 1fr;
+    }
   }
 </style>
 </head>
 
 <body>
 
-<div class="card">
+<div class="wrap">
 
-  <div class="progress-container">
-    <div class="progress-bar" id="bar"></div>
+  <!-- HERO -->
+  <div class="hero">
+    <h1>Continuity Compass™</h1>
+
+    <p>
+      Most businesses don’t fail because they aren’t profitable — they fail because they’re too dependent on systems, platforms, or income sources they don’t control.
+      <br><br>
+      This tool shows you exactly where your business is vulnerable in under 3 minutes.
+    </p>
+
+    <a class="cta" href="assessment.html">Start Your Free Business Review →</a>
+    <div class="secondary">No signup required • Instant results • Works on mobile</div>
   </div>
 
-  <div class="progress" id="progress">Question</div>
+  <!-- WHAT IT DOES -->
+  <div class="section">
+    <h2>What you’ll discover</h2>
+    <p>
+      Continuity Compass analyses your business across key resilience areas to reveal hidden risks and dependencies that most founders never see until something breaks.
+    </p>
 
-  <h1 id="question">Loading...</h1>
+    <div class="grid">
+      <div class="card">
+        <h3>Resilience Score</h3>
+        <p>A clear rating of how stable your business really is.</p>
+      </div>
 
-  <div id="options"></div>
+      <div class="card">
+        <h3>Risk Exposure</h3>
+        <p>Identify your single points of failure before they become problems.</p>
+      </div>
 
-  <a href="#" class="next" id="nextBtn">Next →</a>
+      <div class="card">
+        <h3>Recovery Readiness</h3>
+        <p>Understand how quickly you could recover from disruption.</p>
+      </div>
+    </div>
+  </div>
+
+  <!-- WHY IT MATTERS -->
+  <div class="section">
+    <h2>Why this matters</h2>
+
+    <p>
+      Most modern businesses rely heavily on platforms like Instagram, Shopify, TikTok, or a small number of clients.
+      <br><br>
+      The problem isn’t growth — it’s concentration risk. If one system fails, everything can stop.
+    </p>
+
+    <div class="outcomes">
+
+      <div class="outcome">
+        <strong>Without visibility</strong>
+        You don’t know what would actually happen if your systems failed tomorrow.
+      </div>
+
+      <div class="outcome">
+        <strong>With Continuity Compass</strong>
+        You get a clear breakdown of risk — and exactly what to fix first.
+      </div>
+
+    </div>
+  </div>
+
+  <!-- FINAL CTA -->
+  <div class="final-cta">
+    <h2>Get your resilience score in 3 minutes</h2>
+    <p>Start your free Continuity Compass assessment now.</p>
+    <a href="assessment.html">Start Assessment →</a>
+  </div>
 
 </div>
-
-<script>
-
-const questions = [
-  { text: "How many income streams does your business have?", category: "dependence", options: [
-    { text: "1 main source", score: 5 },
-    { text: "2 sources", score: 4 },
-    { text: "3 sources", score: 2 },
-    { text: "4+ diversified", score: 1 }
-  ]},
-
-  { text: "What % of revenue comes from your largest customer/platform?", category: "dependence", options: [
-    { text: "80–100%", score: 5 },
-    { text: "50–79%", score: 4 },
-    { text: "30–49%", score: 3 },
-    { text: "<30%", score: 1 }
-  ]},
-
-  { text: "How reliant are you on one platform?", category: "digital", options: [
-    { text: "Completely reliant", score: 5 },
-    { text: "Mostly reliant", score: 4 },
-    { text: "Balanced", score: 2 },
-    { text: "Independent", score: 1 }
-  ]},
-
-  { text: "Do you regularly back up your business data?", category: "data", options: [
-    { text: "Never", score: 5 },
-    { text: "Occasionally", score: 3 },
-    { text: "Automated backups", score: 1 }
-  ]},
-
-  { text: "Can someone else run your business if you are unavailable?", category: "operations", options: [
-    { text: "No", score: 5 },
-    { text: "Partially", score: 3 },
-    { text: "Yes", score: 1 }
-  ]},
-
-  { text: "How many months could you survive with no income?", category: "financial", options: [
-    { text: "<1 month", score: 5 },
-    { text: "1–2 months", score: 4 },
-    { text: "3–6 months", score: 3 },
-    { text: "6+ months", score: 1 }
-  ]},
-
-  { text: "Do you have a recovery plan if systems fail?", category: "recovery", options: [
-    { text: "No", score: 5 },
-    { text: "Some idea", score: 3 },
-    { text: "Written plan", score: 1 }
-  ]},
-
-  { text: "Can you reach your audience if your main platform disappears?", category: "comms", options: [
-    { text: "No", score: 5 },
-    { text: "Partially", score: 3 },
-    { text: "Yes", score: 1 }
-  ]}
-];
-
-let current = 0;
-let selected = false;
-
-let scores = {
-  dependence: 0,
-  digital: 0,
-  data: 0,
-  operations: 0,
-  financial: 0,
-  recovery: 0,
-  comms: 0
-};
-
-function loadQuestion() {
-  const q = questions[current];
-
-  document.getElementById("question").innerText = q.text;
-  document.getElementById("progress").innerText =
-    `Question ${current + 1} of ${questions.length}`;
-
-  const percent = (current / questions.length) * 100;
-  document.getElementById("bar").style.width = percent + "%";
-
-  const optionsDiv = document.getElementById("options");
-  optionsDiv.innerHTML = "";
-
-  selected = false;
-
-  q.options.forEach(opt => {
-    const div = document.createElement("div");
-    div.className = "option";
-    div.innerText = opt.text;
-
-    div.onclick = () => {
-
-      document.querySelectorAll('.option').forEach(o => {
-        o.classList.remove('selected');
-      });
-
-      div.classList.add('selected');
-
-      selected = true;
-
-      if (!div.dataset.locked) {
-        scores[q.category] += opt.score;
-        div.dataset.locked = "true";
-      }
-    };
-
-    optionsDiv.appendChild(div);
-  });
-}
-
-document.getElementById("nextBtn").onclick = (e) => {
-  e.preventDefault();
-
-  if (!selected) {
-    alert("Please select an option");
-    return;
-  }
-
-  current++;
-
-  if (current >= questions.length) {
-    document.getElementById("bar").style.width = "100%";
-    localStorage.setItem("compassScores", JSON.stringify(scores));
-    window.location.href = "result.html";
-  } else {
-    loadQuestion();
-  }
-};
-
-loadQuestion();
-
-</script>
 
 </body>
 </html>
